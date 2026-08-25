@@ -51,7 +51,7 @@ export SUPPORTED=false
 export PANEL_DL_URL="${PANEL_DL_URL:-https://github.com/pelican/panel/releases/latest/download/panel.tar.gz}"
 export WINGS_DL_URL="https://github.com/pelican/wings/releases/latest/download/wings_linux_"
 # Repo arg defaults
-export REPO="${REPO:-Zinidia/Pelinstaller}"
+export REPO="${REPO:-sollevix67/Pelinstaller}"
 export BRANCH="${BRANCH:-Production}"
 export GIT_REPO_URL="${GIT_REPO_URL:-https://raw.githubusercontent.com/$REPO/$BRANCH}"
 
@@ -124,7 +124,7 @@ welcome() {
   output ""
   output "Copyright (C) 2018 - 2024, Vilhelm Prytz, <vilhelm@prytznet.se>"
   output "Copyright (C) 2021 - 2026, Matthew Jacob, <git@matthew.network>"
-  output "https://github.com/Zinidia/Pelinstaller"
+  output "https://github.com/sollevix67/Pelinstaller"
   output ""
   output "This script is not associated with the official Pelican Project."
   output ""

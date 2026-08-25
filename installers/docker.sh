@@ -6,7 +6,7 @@
 set -e
 
 export PATH="$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
-export GIT_REPO_URL="${GIT_REPO_URL:-https://raw.githubusercontent.com/${REPO:-Zinidia/Pelinstaller}/${BRANCH:-Production}}"
+export GIT_REPO_URL="${GIT_REPO_URL:-https://raw.githubusercontent.com/${REPO:-sollevix67/Pelinstaller}/${BRANCH:-Production}}"
 
 # -------------- Load Lib -------------- #
 fn_exists() { declare -F "$1" >/dev/null; }
@@ -190,3 +190,4 @@ summary() {
 
 # Run script
 main
+

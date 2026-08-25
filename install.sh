@@ -43,7 +43,7 @@ error() {
 }
 
 # Parse args
-REPO="${REPO:-Zinidia/Pelinstaller}"
+REPO="${REPO:-sollevix67/Pelinstaller}"
 BRANCH="${BRANCH:-Production}"
 MODE=""
 
