@@ -4,10 +4,10 @@ set -e
 
 ######################################################################################
 #                                                                                    #
-# Project 'pelican-installer'                                                        #
+# Project 'Pelinstaller'                                                             #
 #                                                                                    #
 # Copyright (C) 2018 - 2024, Vilhelm Prytz, <vilhelm@prytznet.se>                    #
-# Copyright (C) 2021 - 2024, Matthew Jacob, <me@matthew.expert>                      #
+# Copyright (C) 2021 - 2026, Matthew Jacob, <git@matthew.network>                    #
 #                                                                                    #
 #   This program is free software: you can redistribute it and/or modify             #
 #   it under the terms of the GNU General Public License as published by             #
@@ -22,10 +22,10 @@ set -e
 #   You should have received a copy of the GNU General Public License                #
 #   along with this program.  If not, see <https://www.gnu.org/licenses/>.           #
 #                                                                                    #
-# https://github.com/pelican-installer/pelican-installer/blob/Production/LICENSE.md  #
+# https://github.com/Zinidia/Pelinstaller/blob/Production/LICENSE.md                 #
 #                                                                                    #
 # This script is not associated with the official Pelican Project.                   #
-# https://github.com/pelican-installer/pelican-installer                             #
+# https://github.com/Zinidia/Pelinstaller                                            #
 #                                                                                    #
 ######################################################################################
 
@@ -33,14 +33,14 @@ set -e
 fn_exists() { declare -F "$1" >/dev/null; }
 if ! fn_exists lib_loaded; then
   # shellcheck source=lib/lib.sh
-  source /tmp/lib.sh || source <(curl -sSL "$GITHUB_BASE_URL/$GITHUB_SOURCE"/lib/lib.sh)
+  source /tmp/lib.sh || source <(curl -fsSL "$GIT_REPO_URL"/lib/lib.sh)
   ! fn_exists lib_loaded && echo "* ERROR: Could not load lib script" && exit 1
 fi
 
 CHECKIP_URL="https://ip.forestracks.net"
 DNS_SERVER="9.9.9.9"
 
-# exit with error status code if user is not root
+# Exit with error status code if user is not root
 if [[ $EUID -ne 0 ]]; then
   echo "* This script must be executed with root privileges (sudo)." 1>&2
   exit 1
@@ -61,10 +61,10 @@ dep_install() {
   update_repos true
 
   case "$OS" in
-  ubuntu | debian)
+  debian | ubuntu)
     install_packages "dnsutils" true
     ;;
-  rocky | almalinux)
+  almalinux | rocky)
     install_packages "bind-utils" true
     ;;
   esac
@@ -75,10 +75,10 @@ dep_install() {
 confirm() {
   output "This script will perform a HTTPS request to the endpoint $CHECKIP_URL"
   output "The official IP check service for this script, https://ip.forestracks.net"
-  output "- The reason is to check if your domain properly points to this machine."
+  output "- The reason is to check if your domain properly resolves to this system's IP."
   output "- We will store request logs for several days for DDoS Mitigation reasons."
   output "- Requests may also be logged by Cloudflare and other transit providers."
-  output "If you would like to use another service, feel free to modify the script."
+  output "If you would like to use another service, modify the CHECKIP_URL env var."
 
   echo -e -n "* I agree that this HTTPS request is performed (y/N): "
   read -r confirm
@@ -95,8 +95,9 @@ dns_verify() {
 
 main() {
   fqdn="$1"
+  confirm || exit 1
   dep_install
-  confirm && dns_verify
+  dns_verify
   true
 }
 

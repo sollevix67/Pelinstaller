@@ -1,28 +1,20 @@
 # Pelinstaller
 
-[![License: GPL v3](https://img.shields.io/github/license/Zinidia/Pelinstaller)](LICENSE.md)
+[![License: GPL v3](https://img.shields.io/github/license/sollevix67/Pelinstaller)](LICENSE.md)
 
-<table><tr></tr><tr><td>
+## Installation
 
-### ⚠️ Pelican is in beta so this script may not work if breaking changes are made, this script will also be recoded to use Docker Compose in the coming days :construction:
-
-Welcome to the Pelinstaller repository! This installer is a hard fork of [ForestRacks's Pterodactyl Installer](https://github.com/ForestRacks/PteroInstaller) and is specifically designed for people to easily install and set up the Pelican on Debian-based or RHEL-based machines. If you encounter any issues during the installation process, post an issue on our GitHub repository for assistance.
-
-Learn more about [Pelican's Project](https://pelican.dev/) here. This script is a third-party utility and not associated with the official Pelican Project.
-
-<br></td></tr></table>
-
-## Using the installation scripts
-
-To use the installation scripts, simply run this command as root. The script will ask you whether you would like to install just the panel, just Wings or both.
+1) To get started, it's important to ensure that your machine is freshly reinstalled if you've made any changes to it beforehand.
+2) Point a DNS A-Record to your machine's IP address, like panel.example.com to 192.168.53.72.
+3) To download and run the installer, simply enter the following command into your terminal and follow the prompts:
 
 ```bash
-bash <(curl -Ss https://raw.githubusercontent.com/Zinidia/Pelinstaller/Production/install.sh || wget -O - https://raw.githubusercontent.com/Zinidia/Pelinstaller/Production/install.sh) auto
+bash <(curl -Ss https://raw.githubusercontent.com/sollevix67/Pelinstaller/Production/install.sh || wget -O - https://raw.githubusercontent.com/sollevix67/Pelinstaller/Production/install.sh)
 ```
 
 _Note: On some systems, it's required to be already logged in as root before executing the one-line command (where `sudo` is in front of the command does not work)._
 
-⚠️ Warning: There is currently an issue where Pelican creates files owned by the wrong Linux user when specific features on the admin panel are enabled. To resolve this, you may have to adjust the permissions by running the following command: `chown -R www-data:www-data /var/www/pelican`. For more details, check Pelican's [troubleshooting guide](https://pelican.dev/docs/troubleshooting/).
+⚠️ Troubleshooting: If you encounter any issues during installation or while using Pelican, first check the Pelican logs and review the official [Pelican Troubleshooting Guide](https://pelican.dev/docs/troubleshooting/). If you're still unable to resolve the problem, please open an issue on the [PelInstaller GitHub repository](https://github.com/sollevix67/Pelinstaller) and share any relevant logs.
 
 Here is a [YouTube Video](https://www.youtube.com/watch?v=E8UJhyUFoHM) that illustrates the installation process.
 
@@ -36,7 +28,7 @@ Here is a [YouTube Video](https://www.youtube.com/watch?v=E8UJhyUFoHM) that illu
 
 ## Help and support
 
-For help and support regarding the script itself and **not the official Pelican project**, create a [Github Issue](https://github.com/pelican-installer/pelican-installer/issues).
+For help and support regarding the script itself and **not the official Pelican project**, create a [Github Issue](https://github.com/sollevix67/Pelinstaller/issues).
 
 ## Supported installations
 
@@ -48,21 +40,25 @@ List of supported installation setups for panel and Wings (installations support
 | ---------------- | ------- | ------------------ | ----------- |
 | Ubuntu           | 16.04   | :red_circle:       |             |
 |                  | 18.04   | :red_circle: \*    |             |
-|                  | 20.04   | :white_check_mark: | 8.3         |
-|                  | 22.04   | :white_check_mark: | 8.3         |
-|                  | 24.04   | :white_check_mark: | 8.3         |
+|                  | 20.04   | :white_check_mark: | 8.5         |
+|                  | 22.04   | :white_check_mark: | 8.5         |
+|                  | 24.04   | :white_check_mark: | 8.5         |
+|                  | 26.04   | :white_check_mark: | 8.5         |
 | Debian           | 8       | :red_circle: \*    |             |
 |                  | 9       | :red_circle: \*    |             |
-|                  | 10      | :white_check_mark: | 8.3         |
-|                  | 11      | :white_check_mark: | 8.3         |
-|                  | 12      | :white_check_mark: | 8.3         |
+|                  | 10      | :white_check_mark: | 8.5         |
+|                  | 11      | :white_check_mark: | 8.5         |
+|                  | 12      | :white_check_mark: | 8.5         |
+|                  | 13      | :white_check_mark: | 8.5         |
 | CentOS           | 6       | :red_circle:       |             |
 |                  | 7       | :red_circle: \*    |             |
 |                  | 8       | :red_circle: \*    |             |
-| Rocky Linux      | 8       | :white_check_mark: | 8.3         |
-|                  | 9       | :white_check_mark: | 8.3         |
-| AlmaLinux        | 8       | :white_check_mark: | 8.3         |
-|                  | 9       | :white_check_mark: | 8.3         |
+| Rocky Linux      | 8       | :white_check_mark: | 8.5         |
+|                  | 9       | :white_check_mark: | 8.5         |
+|                  | 10      | :white_check_mark: | 8.5         |
+| AlmaLinux        | 8       | :white_check_mark: | 8.5         |
+|                  | 9       | :white_check_mark: | 8.5         |
+|                  | 10      | :white_check_mark: | 8.5         |
 
 _\* Indicates an operating system and release that previously was supported by this script._
 
@@ -74,13 +70,13 @@ The installation scripts can install and configure a firewall for you. The scrip
 
 ### Creating a release
 
-In `install.sh` github source and script release variables should change every release. Firstly, update the `CHANGELOG.md` so that the release date and release tag are both displayed. No changes should be made to the changelog points themselves. Secondly, update `GITHUB_SOURCE` and `SCRIPT_RELEASE` in `install.sh`. Finally, you can now push a commit with the message `Release vX.Y.Z`. Create a release on GitHub. See [this commit](https://github.com/pelican-installer/pelican-installer/commit/90aaae10785f1032fdf90b216a4a8d8ca64e6d44) for reference.
+In `install.sh` github source and script release variables should change every release. Firstly, update the `CHANGELOG.md` so that the release date and release tag are both displayed. No changes should be made to the changelog points themselves. Secondly, update `GITHUB_SOURCE` and `SCRIPT_RELEASE` in `install.sh`. Finally, you can now push a commit with the message `Release vX.Y.Z`. Create a release on GitHub. See [this commit](https://github.com/Zinidia/Pelinstaller/commit/90aaae10785f1032fdf90b216a4a8d8ca64e6d44) for reference.
 
 
 ## Sponsors ✨
 
 I would like to extend my sincere thanks to the following sponsors for helping fund Pelinstaller's development.
-[Interested in becoming a sponsor?](mailto:me@matthew.expert)
+[Interested in becoming a sponsor?](mailto:git@matthew.network)
 
 | Company                                                   | About                                                                                                                                                                                                                                           |
 |-----------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -99,4 +95,4 @@ We would like to thank the following contributors for their work in maintaining 
 8) [sinjs](https://github.com/sinjs)
 
 Copyright (C) 2018 - 2024, Vilhelm Prytz
-Copyright (C) 2021 - 2024, Matthew Jacob
+Copyright (C) 2021 - 2026, Matthew Jacob
