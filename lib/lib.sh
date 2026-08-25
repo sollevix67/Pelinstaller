@@ -229,6 +229,49 @@ create_db() {
 }
 
 # --------------- Package Manager -------------- #
+
+# Add the ondrej/php PPA without relying on the Launchpad API, which
+# intermittently fails with HTTP 500 (GPGKeyTemporarilyNotFoundError).
+add_ondrej_php_ppa() {
+  local attempt
+
+  # First, try add-apt-repository a few times (handles transient failures)
+  for attempt in 1 2 3; do
+    if LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php; then
+      return 0
+    fi
+    warning "add-apt-repository failed (attempt $attempt/3), retrying in 5 seconds.."
+    sleep 5
+  done
+
+  # Fallback: configure the repository manually, fetching the signing keys
+  # directly from the Ubuntu keyserver (fingerprints from the official PPA page)
+  warning "Falling back to manual PPA configuration.."
+
+  mkdir -p /etc/apt/keyrings
+  local keyring="/etc/apt/keyrings/ondrej-php.gpg"
+  rm -f "$keyring"
+
+  local fingerprint
+  for fingerprint in \
+    B8DC7E53946656EFBCE4C1DD71DAEAAB4AD4CAB6 \
+    14AA40EC0831756756D7F66C4F4EA0AAE5267A6C; do
+    curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x${fingerprint}" |
+      gpg --batch --yes --dearmor -o - >>"$keyring" || return 1
+  done
+
+  local codename="${UBUNTU_CODENAME:-$(lsb_release -sc)}"
+  tee /etc/apt/sources.list.d/ondrej-php.sources >/dev/null <<EOF
+Types: deb
+URIs: https://ppa.launchpadcontent.net/ondrej/php/ubuntu/
+Suites: ${codename}
+Components: main
+Signed-By: ${keyring}
+EOF
+
+  success "Ondrej PHP PPA configured manually"
+}
+
 # Argument for quite mode
 update_repos() {
   local args=""

@@ -260,7 +260,7 @@ ubuntu_dep() {
 
   # Add PHP PPA
   if curl -fsSL "https://ppa.launchpadcontent.net/ondrej/php/ubuntu/dists/${UBUNTU_CODENAME}/Release" >/dev/null; then
-    LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
+    add_ondrej_php_ppa
   else
     warning "Ondrej PHP PPA does not support ${UBUNTU_CODENAME}; using Ubuntu packages."
   fi
